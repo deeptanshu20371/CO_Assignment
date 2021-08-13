@@ -80,18 +80,18 @@ for i in instruction:
     			print(Dict[k],end='')
     			break
     		print("00",end='')
-    		for reg in Reg_Address:
-    			if (reg==i[opcodeindex+1]):
-    				print(reg,end='')
-    				break
-    		for reg in Reg_Address:
-    			if (reg==i[opcodeindex+2]):
-    				print(reg,end='')
-    				break
-    		for reg in Reg_Address:
-    			if (reg==i[opcodeindex+3]):
-    				print(reg)
-    				break
+    	for reg in Reg_Address:
+    		if (reg==i[opcodeindex+1]):
+    			print(Reg_Address[reg],end='')
+    			break
+    	for reg in Reg_Address:
+    		if (reg==i[opcodeindex+2]):
+    			print(Reg_Address[reg],end='')
+    			break
+    	for reg in Reg_Address:
+    		if (reg==i[opcodeindex+3]):
+    			print(Reg_Address[reg])
+    			break
 
     #TypeB 
     elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$")):
@@ -104,7 +104,7 @@ for i in instruction:
      				break
      	for reg in Reg_Address:
      		if (reg==i[opcodeindex+1]):
-     			print(reg,end='')
+     			print(Reg_Address[reg],end='')
      			break
      	imm=i[opcodeindex+2][1:]
      	imm=bin(int(imm)).replace("0b","")
@@ -117,7 +117,7 @@ for i in instruction:
                 print(Dict[k],end='')
                 break
         for j in instruction:
-            if j[0][0:len(j[0])-1]==i[opcode+1]:
+            if j[0][0:len(j[0])-1]==i[opcodeindex+1]:
                 print('000'+j[-1])
                 break
 
