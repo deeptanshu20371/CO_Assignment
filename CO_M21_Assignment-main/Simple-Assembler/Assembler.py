@@ -71,16 +71,18 @@ Reg_Address={
 #=========================Error_Handling=========================
 
 #Typos in instruction name
-for i in instructions:
+for i in instruction:
+    if(i[0]=='var'):
+        continue
     opcodeindex=0
     if(i[opcodeindex][-1]==':'):
         opcodeindex=1
     if(i[opcodeindex]=='add' or i[opcodeindex]=='sub' or i[opcodeindex]=='mov' or i[opcodeindex]=='ld' or i[opcodeindex]=='st' or i[opcodeindex]=='mul' or i[opcodeindex]=='div' or i[opcodeindex]=='rs' or i[opcodeindex]=='ls' or i[opcodeindex]=='xor' or i[opcodeindex]=='or' or i[opcodeindex]=='and' or i[opcodeindex]=='not' or i[opcodeindex]=='cmp' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or i[opcodeindex]=='jgt' or i[opcodeindex]=='je' or i[opcodeindex]=='hlt' ):
         continue
     else:
-        print(i[opcodeindex]+"is not a valid instruction name.")
+        print(i[opcodeindex]+" is not a valid instruction name.")
         sys.exit()
-        
+
 #=========================Error_Handling=========================
 
 #Driver code
@@ -95,7 +97,7 @@ for i in instruction:
     		if i[opcodeindex]==k:
     			print(Dict[k],end='')
     			break
-    		print("00",end='')
+    	print("00",end='')
     	for reg in Reg_Address:
     		if (reg==i[opcodeindex+1]):
     			print(Reg_Address[reg],end='')
@@ -111,24 +113,23 @@ for i in instruction:
 
     #TypeB 
     elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$")):
-     	if (i[opcodeindex]=="mov"):
-     		print("00010",end='')
-     	else:
-     		for k in Dict:
-     			if i[opcodeindex]==k:
-     				print(Dict[k],end='')
-     				break
-     	for reg in Reg_Address:
-     		if (reg==i[opcodeindex+1]):
-     			print(Reg_Address[reg],end='')
-     			break
-     	imm=i[opcodeindex+2][1:]
-     	imm=bin(int(imm)).replace("0b","")
-     	print(imm)
-        
-    #TypeC
-    elif    
-    
+        if (i[opcodeindex]=="mov"):
+        	print("00010",end='')
+        else:
+        	for k in Dict:
+        		if i[opcodeindex]==k:
+        			print(Dict[k],end='')
+        			break
+        for reg in Reg_Address:
+        	if (reg==i[opcodeindex+1]):
+        		print(Reg_Address[reg],end='')
+        		break
+        imm=i[opcodeindex+2][1:]
+        imm=bin(int(imm)).replace("0b","")
+        z_add=8-len(imm)
+        imm=("0"*z_add)+imm
+        print(imm)
+
     #TypeE
     elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
         for k in Dict:
@@ -147,3 +148,4 @@ for i in instruction:
                 print(Dict[k],end='')
                 break
         print('00000000000')
+
