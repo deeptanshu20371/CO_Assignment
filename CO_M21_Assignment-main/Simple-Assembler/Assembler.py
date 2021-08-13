@@ -16,7 +16,6 @@ no_of_variables=0
 for i in instruction:
     if(i[0]=='var'):
         no_of_variables+=1;
-#['var', 'x'] => ['var', 'x', '00000000']
 for i in range(len(instruction)):
     if(instruction[i][0][-1]==':'):
         binary_of_label=bin(i-no_of_variables).replace('0b','')
@@ -25,6 +24,17 @@ for i in range(len(instruction)):
             x += '0'
         binary_of_label = x[::-1]
         instruction[i].append(binary_of_label)
+
+#Giving variables binary values
+#['var', 'x'] => ['var', 'x', '00000000']
+for i in range(len(instruction)):
+    if(instruction[i][0]=='var'):
+        binary_of_var=bin(len(instruction)-no_of_variables+i).replace('0b','')
+        x = binary_of_var[::-1] 
+        while len(x) < 8:
+            x += '0'
+        binary_of_var = x[::-1]
+        instruction[i].append(binary_of_var)
 
 #Dictionary for Op code
 Dict = {'add':'00000',
@@ -118,13 +128,3 @@ for i in instruction:
                 print(Dict[k],end='')
                 break
         print('00000000000')
-
-#Giving variables binary values
-for i in range(len(instruction)):
-    if(instruction[i][0]=='var'):
-        binary_of_var=bin(len(instruction)-no_of_variables+i).replace('0b','')
-        x = binary_of_var[::-1] 
-        while len(x) < 8:
-            x += '0'
-        binary_of_var = x[::-1]
-        instruction[i].append(binary_of_var)
