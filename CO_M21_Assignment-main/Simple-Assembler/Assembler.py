@@ -16,6 +16,7 @@ no_of_variables=0
 for i in instruction:
     if(i[0]=='var'):
         no_of_variables+=1;
+#['var', 'x'] => ['var', 'x', '00000000']
 for i in range(len(instruction)):
     if(instruction[i][0][-1]==':'):
         binary_of_label=bin(i-no_of_variables).replace('0b','')
@@ -83,21 +84,21 @@ for i in instruction:
     				break
 
     #TypeB 
-    elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$"))
+    elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$")):
      	if (i[opcodeindex]=="mov"):
      		print("00010",end='')
      	else:
-	    	for k in Dict:
-	    		if i[opcodeindex]==k:
-	    			print(Dict[k],end='')
-	    			break
-    	for reg in Reg_Address:
-    			if (reg==i[opcodeindex+1]):
-    				print(reg,end='')
-    				break
-    	imm=i[opcodeindex+2][1:]
-    	imm=bin(int(imm)).replace("0b","")
-    	print(imm)
+     		for k in Dict:
+     			if i[opcodeindex]==k:
+     				print(Dict[k],end='')
+     				break
+     	for reg in Reg_Address:
+     		if (reg==i[opcodeindex+1]):
+     			print(reg,end='')
+     			break
+     	imm=i[opcodeindex+2][1:]
+     	imm=bin(int(imm)).replace("0b","")
+     	print(imm)
 
     #TypeE
     elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
