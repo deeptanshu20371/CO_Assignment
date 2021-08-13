@@ -1,5 +1,6 @@
 #input
 import os
+import sys
 lines = os.read(0, 10**6).strip().splitlines() 
 i=0;
 size=len(lines)
@@ -66,6 +67,21 @@ Reg_Address={
         'R5':'101',
         'R6':'110',
         'FLAGS':'111'}
+
+#=========================Error_Handling=========================
+
+#Typos in instruction name
+for i in instructions:
+    opcodeindex=0
+    if(i[opcodeindex][-1]==':'):
+        opcodeindex=1
+    if(i[opcodeindex]=='add' or i[opcodeindex]=='sub' or i[opcodeindex]=='mov' or i[opcodeindex]=='ld' or i[opcodeindex]=='st' or i[opcodeindex]=='mul' or i[opcodeindex]=='div' or i[opcodeindex]=='rs' or i[opcodeindex]=='ls' or i[opcodeindex]=='xor' or i[opcodeindex]=='or' or i[opcodeindex]=='and' or i[opcodeindex]=='not' or i[opcodeindex]=='cmp' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or i[opcodeindex]=='jgt' or i[opcodeindex]=='je' or i[opcodeindex]=='hlt' ):
+        continue
+    else:
+        print(i[opcodeindex]+"is not a valid instruction name.")
+        sys.exit()
+        
+#=========================Error_Handling=========================
 
 #Driver code
 for i in instruction:
