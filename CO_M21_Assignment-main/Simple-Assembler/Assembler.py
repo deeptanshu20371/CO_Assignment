@@ -125,7 +125,10 @@ for i in instruction:
      	imm=i[opcodeindex+2][1:]
      	imm=bin(int(imm)).replace("0b","")
      	print(imm)
-
+        
+    #TypeC
+    elif    
+    
     #TypeE
     elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
         for k in Dict:
