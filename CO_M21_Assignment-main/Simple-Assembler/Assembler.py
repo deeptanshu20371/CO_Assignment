@@ -45,32 +45,6 @@ Dict = {'add':'00000',
         'je':'10010',
         'hlt':'10011'}
 
-#Driver code
-for i in instruction:
-    opcodeindex=0;
-    if(i[opcodeindex][-1]==':'):
-            opcodeindex=1;
-
-    #TypeA
-    if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" ori[opcodeindex]=="and"):
-    	for k in Dict:
-
-   #TypeE
-    elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
-        for k in Dict:
-            if i[opcodeindex]==k:
-                print(Dict[k],end='')
-        for j in instruction:
-            if j[0][0:len(j[0])-1]==i[opcode+1]:
-                print('000'+j[-1])
-
-    #TypeF
-    elif(i[opcodeindex]=='hlt'):
-        for k in Dict:
-            if i[opcodeindex]==k:
-                print(Dict[k],end='')
-        print('00000000000')
-
 #Dictionary for register adress
 Reg_Address={
         'R0':'000',
@@ -82,6 +56,68 @@ Reg_Address={
         'R6':'110',
         'FLAGS':'111'}
 
+#Driver code
+for i in instruction:
+    opcodeindex=0;
+    if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+
+    #TypeA
+    if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" or i[opcodeindex]=="and"):
+    	for k in Dict:
+    		if i[opcodeindex]==k:
+    			print(Dict[k],end='')
+    			break
+    		print("00",end='')
+    		for reg in Reg_Address:
+    			if (reg==i[opcodeindex+1]):
+    				print(reg,end='')
+    				break
+    		for reg in Reg_Address:
+    			if (reg==i[opcodeindex+2]):
+    				print(reg,end='')
+    				break
+    		for reg in Reg_Address:
+    			if (reg==i[opcodeindex+3]):
+    				print(reg)
+    				break
+
+    #TypeB 
+    elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$"))
+     	if (i[opcodeindex]=="mov"):
+     		print("00010",end='')
+     	else:
+	    	for k in Dict:
+	    		if i[opcodeindex]==k:
+	    			print(Dict[k],end='')
+	    			break
+    	for reg in Reg_Address:
+    			if (reg==i[opcodeindex+1]):
+    				print(reg,end='')
+    				break
+    	imm=i[opcodeindex+2][1:]
+    	imm=bin(int(imm)).replace("0b","")
+    	print(imm)
+
+    #TypeE
+    elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
+        for k in Dict:
+            if i[opcodeindex]==k:
+                print(Dict[k],end='')
+                break
+        for j in instruction:
+            if j[0][0:len(j[0])-1]==i[opcode+1]:
+                print('000'+j[-1])
+                break
+
+    #TypeF
+    elif(i[opcodeindex]=='hlt'):
+        for k in Dict:
+            if i[opcodeindex]==k:
+                print(Dict[k],end='')
+                break
+        print('00000000000')
+
 #Giving variables binary values
 for i in range(len(instruction)):
     if(instruction[i][0]=='var'):
@@ -91,5 +127,3 @@ for i in range(len(instruction)):
             x += '0'
         binary_of_var = x[::-1]
         instruction[i].append(binary_of_var)
-
-print(instruction)
