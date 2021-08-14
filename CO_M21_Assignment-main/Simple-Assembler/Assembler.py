@@ -206,7 +206,7 @@ for i in instruction:
                 opcode=0;
                 if(j[opcode][-1]==':'):
                     opcode=1;
-                if j[opcode]==("hlt"):
+                if j[opcode]==("hlt"): #-------------------REVIEW
                     continue
                 elif j[opcode+1]==i[opcodeindex+2]:
                     print(j[-1])
