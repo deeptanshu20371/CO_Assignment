@@ -173,6 +173,44 @@ for i in instruction:
         z_add=8-len(imm)
         imm=("0"*z_add)+imm
         print(imm)
+        
+    #TypeC
+    elif(i[opcodeindex]=="mov" or i[opcodeindex]=="div" or i[opcodeindex]=="not" or i[opcodeindex]=="cmp"):
+        if (i[opcodeindex]=="mov"):
+        	print("00011",end='')
+        else:
+        	for k in Dict:
+        		if i[opcodeindex]==k:
+        			print(Dict[k],end='')
+        			break
+        print("00000",end='')
+        for reg in Reg_Address:
+        	if (reg==i[opcodeindex+1]):
+        		print(Reg_Address[reg],end='')
+        		break
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+2]):
+                print(Reg_Address[reg])
+                break
+    #TypeD
+    elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):
+        for k in Dict:
+            if i[opcodeindex]==k:
+                print(Dict[k],end='')
+                break
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                print(Reg_Address[reg],end='')
+                break
+        for j in instruction:
+                opcode=0;
+                if(j[opcode][-1]==':'):
+                    opcode=1;
+                if j[opcode]==("hlt"):
+                    continue
+                elif j[opcode+1]==i[opcodeindex+2]:
+                    print(j[-1])
+                    break
 
     #TypeE
     elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
