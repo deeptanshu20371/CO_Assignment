@@ -14,11 +14,18 @@ for x in range(len(lines)):
 #Appends binary values of the label to instruction list
 #['loop:','add', 'R1', 'R1', 'R2'] => ['loop:','add', 'R1', 'R1', 'R2','00000000']
 no_of_variables=0
+variable_list=[]
+label_list=[]
 for i in instruction:
     if(i[0]=='var'):
+        if len(i)==1:                           #===========REVIEW=============
+            variable_list.append("")
+        else:
+            variable_list.append(i[1])
         no_of_variables+=1;
 for i in range(len(instruction)):
     if(instruction[i][0][-1]==':'):
+        label_list.append(instruction[i][0][:-1])
         binary_of_label=bin(i-no_of_variables).replace('0b','')
         x = binary_of_label[::-1] 
         while len(x) < 8:
@@ -70,7 +77,7 @@ Reg_Address={
 
 #=========================Error_Handling=========================
 
-#Typos in instruction name
+#Typos in instruction name(a)
 for i in instruction:
     if(i[0]=='var'):
         continue
@@ -83,7 +90,84 @@ for i in instruction:
         print(i[opcodeindex]+" is not a valid instruction name.")
         sys.exit()
 
-        
+#Typos in register name(a), Undefined variables and labels (b and c)
+for i in instruction:
+    opcodeindex=0;
+    if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+    #===========ErrorA===========
+    if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" or i[opcodeindex]=="and"):
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+1]+" is not a valid register name.")
+            sys.exit()
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+2]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+2]+" is not a valid register name.")
+            sys.exit()
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+3]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+3]+" is not a valid register name.")
+            sys.exit()
+    #===========ErrorB===========
+    elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$")):
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+1]+" is not a valid register name.")
+            sys.exit()
+    #===========ErrorC===========
+    elif(i[opcodeindex]=="mov" or i[opcodeindex]=="div" or i[opcodeindex]=="not" or i[opcodeindex]=="cmp"):
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+1]+" is not a valid register name.")
+            sys.exit()
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+2]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+2]+" is not a valid register name.")
+            sys.exit()
+    #===========ErrorD===========
+    elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):
+        if (i[opcodeindex+2] not in variable_list):
+            print(i[opcodeindex+2]+" is an undefined variable")
+            sys.exit()
+        Error_flag=True
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                Error_flag=False
+                break
+        if Error_flag==True:
+            print(i[opcodeindex+1]+" is not a valid register name.")
+            sys.exit()
+    #===========ErrorE===========
+    elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
+        if (i[opcodeindex+1] not in label_list):
+            print(i[opcodeindex+1]+" is and undefined label")
+            sys.exit()
+                
 #Halt errors( h and i)        
 halt_check=0;
 for i in range(len(instruction)):
