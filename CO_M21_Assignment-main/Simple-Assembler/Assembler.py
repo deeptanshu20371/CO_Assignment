@@ -83,6 +83,50 @@ for i in instruction:
         print(i[opcodeindex]+" is not a valid instruction name.")
         sys.exit()
 
+        
+#Halt errors( h and i)        
+halt_check=0;
+for i in range(len(instruction)):
+    opcodeindex=0;
+    if(instruction[i][opcodeindex][-1]==':'):
+            opcodeindex=1;
+    if(instruction[i][opcodeindex]=='hlt' and i!=(len(instruction)-1) ):
+        print("hlt is not the last instruction")
+        sys.exit();
+    
+    if(instruction[i][opcodeindex]=='hlt'):
+        halt_check=1;
+        break;
+
+if halt_check==0:
+    print('Missing hlt instruction')
+    sys.exit();      
+    
+
+#Variable not declared at beginning(g)    
+total_variables=0;
+valid_variable_count=0;
+
+for i in instruction:
+    opcodeindex=0;
+    if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+    if(i[opcodeindex]=='var'):
+        total_variables+=1;
+
+
+for i in instruction:
+    opcodeindex=0;
+    if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+    if(i[opcodeindex]=='var'):
+        valid_variable_count+=1;
+    else:
+        break
+if(valid_variable_count!=total_variables):
+    print('Variables not declared at the beginning')
+    sys.exit();    
+
 #=========================Error_Handling=========================
 
 #Driver code
