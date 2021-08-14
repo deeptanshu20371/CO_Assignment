@@ -167,6 +167,64 @@ for i in instruction:
         if (i[opcodeindex+1] not in label_list):
             print(i[opcodeindex+1]+" is and undefined label")
             sys.exit()
+            
+# (e) ~ Illegal Immediate values (less than 0 or more than 255)
+for i in instruction:
+    opcodeindex=0
+    if (i[opcodeindex]=="mov") and (i[opcodeindex+2][0]=="$"):
+        imm_val = int((i[opcodeindex+2][1:(len(i[opcodeindex+2]))]))
+        if (imm_val >= 0) and (imm_val <= 255):
+            continue
+        else:
+            print("Illegal Immediate values (less than 0 or more than 255)")
+            sys.exit()
+
+# (f) ~ Misuse of labels as variables or vice-versa  --------------REVIEW
+for i in instruction:
+    opcodeindex=0
+    if i[opcodeindex]=='ld' or i[opcodeindex]=='st':
+        if (i[opcodeindex+2][-1])==":":
+            print("Misuse of labels as variables")
+            sys.exit()
+        else:
+            continue
+
+# (j) ~ Wrong syntax used for instructions (For example, add instruction being used as a type B instruction )
+for i in instruction:
+    opcodeindex=0
+    #A
+    if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" or i[opcodeindex]=="and"):
+        if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address) and (i[opcodeindex+3] in Reg_Address):
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
+    #B        
+    elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov") and (i[opcodeindex+2][0]=="$")):
+        if ((i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2][0]=="$")):
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
+    #C
+    elif(i[opcodeindex]=="mov" or i[opcodeindex]=="div" or i[opcodeindex]=="not" or i[opcodeindex]=="cmp"):
+        if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address):
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
+    #D
+    elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):   #--------review for memory address
+        if (i[opcodeindex+1] in Reg_Address):
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
+    #E
+    # elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
+
+    #F
+    # elif(i[opcodeindex]=='hlt'):
                 
 #Halt errors( h and i)        
 halt_check=0;
