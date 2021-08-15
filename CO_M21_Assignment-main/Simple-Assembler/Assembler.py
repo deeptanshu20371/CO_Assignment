@@ -87,6 +87,7 @@ for i in instruction:
     if(i[opcodeindex]=='add' or i[opcodeindex]=='sub' or i[opcodeindex]=='mov' or i[opcodeindex]=='ld' or i[opcodeindex]=='st' or i[opcodeindex]=='mul' or i[opcodeindex]=='div' or i[opcodeindex]=='rs' or i[opcodeindex]=='ls' or i[opcodeindex]=='xor' or i[opcodeindex]=='or' or i[opcodeindex]=='and' or i[opcodeindex]=='not' or i[opcodeindex]=='cmp' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or i[opcodeindex]=='jgt' or i[opcodeindex]=='je' or i[opcodeindex]=='hlt' ):
         continue
     else:
+        print("Error at line "+str(instruction.index(i))+": ",end='')
         print(i[opcodeindex]+" is not a valid instruction name.")
         sys.exit()
 
@@ -103,6 +104,7 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+1]+" is not a valid register name.")
             sys.exit()
         Error_flag=True
@@ -111,6 +113,7 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+2]+" is not a valid register name.")
             sys.exit()
         Error_flag=True
@@ -119,6 +122,7 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+3]+" is not a valid register name.")
             sys.exit()
     #===========ErrorB===========
@@ -129,6 +133,7 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+1]+" is not a valid register name.")
             sys.exit()
     #===========ErrorC===========
@@ -139,6 +144,7 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+1]+" is not a valid register name.")
             sys.exit()
         Error_flag=True
@@ -147,11 +153,13 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+2]+" is not a valid register name.")
             sys.exit()
     #===========ErrorD===========
     elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):
         if (i[opcodeindex+2] not in variable_list):
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+2]+" is an undefined variable")
             sys.exit()
         Error_flag=True
@@ -160,11 +168,13 @@ for i in instruction:
                 Error_flag=False
                 break
         if Error_flag==True:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+1]+" is not a valid register name.")
             sys.exit()
     #===========ErrorE===========
     elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
         if (i[opcodeindex+1] not in label_list):
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print(i[opcodeindex+1]+" is and undefined label")
             sys.exit()
             
@@ -176,6 +186,7 @@ for i in instruction:
         if (imm_val >= 0) and (imm_val <= 255):
             continue
         else:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Illegal Immediate values (less than 0 or more than 255)")
             sys.exit()
 
@@ -184,6 +195,7 @@ for i in instruction:
     opcodeindex=0
     if i[opcodeindex]=='ld' or i[opcodeindex]=='st':
         if (i[opcodeindex+2][-1])==":":
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Misuse of labels as variables")
             sys.exit()
         else:
@@ -197,6 +209,7 @@ for i in instruction:
         if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address) and (i[opcodeindex+3] in Reg_Address):
             continue
         else:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #B        
@@ -204,6 +217,7 @@ for i in instruction:
         if ((i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2][0]=="$")):
             continue
         else:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #C
@@ -211,6 +225,7 @@ for i in instruction:
         if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address):
             continue
         else:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #D
@@ -218,6 +233,7 @@ for i in instruction:
         if (i[opcodeindex+1] in Reg_Address):
             continue
         else:
+            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #E
@@ -233,6 +249,7 @@ for i in range(len(instruction)):
     if(instruction[i][opcodeindex][-1]==':'):
             opcodeindex=1;
     if(instruction[i][opcodeindex]=='hlt' and i!=(len(instruction)-1) ):
+        print("Error at line "+str(i)+": ",end='')
         print("hlt is not the last instruction")
         sys.exit();
     
@@ -266,6 +283,12 @@ for i in instruction:
     else:
         break
 if(valid_variable_count!=total_variables):
+    for i in range(len(instruction)):
+        opcodeindex=0;
+        if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+        if(instruction[len(instructions)-i-1][opcodeindex]=='var'):
+            print("Error at line "+str(i)+": ",end='')
     print('Variables not declared at the beginning')
     sys.exit();    
 
@@ -279,37 +302,37 @@ for i in instruction:
 
     #TypeA
     if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" or i[opcodeindex]=="and"):
-    	for k in Dict:
-    		if i[opcodeindex]==k:
-    			print(Dict[k],end='')
-    			break
-    	print("00",end='')
-    	for reg in Reg_Address:
-    		if (reg==i[opcodeindex+1]):
-    			print(Reg_Address[reg],end='')
-    			break
-    	for reg in Reg_Address:
-    		if (reg==i[opcodeindex+2]):
-    			print(Reg_Address[reg],end='')
-    			break
-    	for reg in Reg_Address:
-    		if (reg==i[opcodeindex+3]):
-    			print(Reg_Address[reg])
-    			break
+        for k in Dict:
+            if i[opcodeindex]==k:
+                print(Dict[k],end='')
+                break
+        print("00",end='')
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+1]):
+                print(Reg_Address[reg],end='')
+                break
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+2]):
+                print(Reg_Address[reg],end='')
+                break
+        for reg in Reg_Address:
+            if (reg==i[opcodeindex+3]):
+                print(Reg_Address[reg])
+                break
 
     #TypeB 
     elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov" and i[opcodeindex+2][0]=="$")):
         if (i[opcodeindex]=="mov"):
-        	print("00010",end='')
+            print("00010",end='')
         else:
-        	for k in Dict:
-        		if i[opcodeindex]==k:
-        			print(Dict[k],end='')
-        			break
+            for k in Dict:
+                if i[opcodeindex]==k:
+                    print(Dict[k],end='')
+                    break
         for reg in Reg_Address:
-        	if (reg==i[opcodeindex+1]):
-        		print(Reg_Address[reg],end='')
-        		break
+            if (reg==i[opcodeindex+1]):
+                print(Reg_Address[reg],end='')
+                break
         imm=i[opcodeindex+2][1:]
         imm=bin(int(imm)).replace("0b","")
         z_add=8-len(imm)
@@ -319,17 +342,17 @@ for i in instruction:
     #TypeC
     elif(i[opcodeindex]=="mov" or i[opcodeindex]=="div" or i[opcodeindex]=="not" or i[opcodeindex]=="cmp"):
         if (i[opcodeindex]=="mov"):
-        	print("00011",end='')
+            print("00011",end='')
         else:
-        	for k in Dict:
-        		if i[opcodeindex]==k:
-        			print(Dict[k],end='')
-        			break
+            for k in Dict:
+                if i[opcodeindex]==k:
+                    print(Dict[k],end='')
+                    break
         print("00000",end='')
         for reg in Reg_Address:
-        	if (reg==i[opcodeindex+1]):
-        		print(Reg_Address[reg],end='')
-        		break
+            if (reg==i[opcodeindex+1]):
+                print(Reg_Address[reg],end='')
+                break
         for reg in Reg_Address:
             if (reg==i[opcodeindex+2]):
                 print(Reg_Address[reg])
@@ -372,4 +395,3 @@ for i in instruction:
                 print(Dict[k],end='')
                 break
         print('00000000000')
-
