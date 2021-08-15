@@ -206,41 +206,47 @@ for i in instruction:
     opcodeindex=0
     #A
     if(i[opcodeindex]=="add" or i[opcodeindex]=="sub" or i[opcodeindex]=="mul" or i[opcodeindex]=="xor" or i[opcodeindex]=="or" or i[opcodeindex]=="and"):
-        if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address) and (i[opcodeindex+3] in Reg_Address):
+        if len(i[opcodeindex:])==4:
             continue
         else:
-            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #B        
     elif(i[opcodeindex]=="rs" or i[opcodeindex]=="ls" or (i[opcodeindex]=="mov") and (i[opcodeindex+2][0]=="$")):
-        if ((i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2][0]=="$")):
+        if len(i[opcodeindex:])==3:
             continue
         else:
-            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #C
     elif(i[opcodeindex]=="mov" or i[opcodeindex]=="div" or i[opcodeindex]=="not" or i[opcodeindex]=="cmp"):
-        if (i[opcodeindex+1] in Reg_Address) and (i[opcodeindex+2] in Reg_Address):
+        if len(i[opcodeindex:])==3:
             continue
         else:
-            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #D
     elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):   #--------review for memory address
-        if (i[opcodeindex+1] in Reg_Address):
+        if len(i[opcodeindex:])==3:
             continue
         else:
-            print("Error at line "+str(instruction.index(i))+": ",end='')
             print("Wrong syntax used for instructions")
             sys.exit()
     #E
-    # elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
-
+    elif(i[opcodeindex]=='jgt' or i[opcodeindex]=='jmp' or i[opcodeindex]=='jlt' or   i[opcodeindex]=='je'):
+        if len(i[opcodeindex:])==2:
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
+    
     #F
-    # elif(i[opcodeindex]=='hlt'):
+    elif(i[opcodeindex]== 'hlt'):
+        if len(i[opcodeindex:])==1:
+            continue
+        else:
+            print("Wrong syntax used for instructions")
+            sys.exit()
                 
 #Halt errors( h and i)        
 halt_check=0;
