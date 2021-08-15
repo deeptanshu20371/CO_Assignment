@@ -24,10 +24,7 @@ variable_list=[]
 label_list=[]
 for i in instruction:
     if(i[0]=='var'):
-        if len(i)==1:                           #===========REVIEW=============
-            variable_list.append("")
-        else:
-            variable_list.append(i[1])
+        variable_list.append(i[1])
         no_of_variables+=1;
 for i in range(len(instruction)):
     if(instruction[i][0][-1]==':'):
@@ -104,14 +101,8 @@ for i in instruction:
     else:
         break
 if(valid_variable_count!=total_variables):
-    for i in range(len(instruction)):
-        opcodeindex=0;
-        if(instruction[i][opcodeindex][-1]==':'):
-            opcodeindex=1;
-        if(instruction[len(instruction)-i-1][opcodeindex]=='var'):
-            print("Error at line "+str(instruction_copy.index(instruction[len(instruction)-i-1])+1)+": ",end='')
-            print('Variables not declared at the beginning')
-            sys.exit();    
+    print('Error at line 1: Variables not declared at the beginning')
+    sys.exit();    
 
 # (j) ~ Wrong syntax used for instructions (For example, add instruction being used as a type B instruction )
 for i in instruction:
@@ -152,7 +143,7 @@ for i in instruction:
             print("Wrong syntax used for instructions")
             sys.exit()
     #D
-    elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'):   #--------review for memory address
+    elif(i[opcodeindex]=='ld' or i[opcodeindex]=='st'): 
         if len(i[opcodeindex:])==3:
             continue
         elif(i[0][-1]==':'):
@@ -300,7 +291,7 @@ for i in instruction:
             print("Illegal Immediate values (less than 0 or more than 255)")
             sys.exit()
 
-# (f) ~ Misuse of labels as variables or vice-versa  --------------REVIEW
+# (f) ~ Misuse of labels as variables or vice-versa 
 for i in instruction:
     opcodeindex=0
     if(i[opcodeindex][-1]==':'):
@@ -428,7 +419,7 @@ for i in instruction:
                 opcode=0;
                 if(j[opcode][-1]==':'):
                     opcode=1;
-                if j[opcode]==("hlt"): #-------------------REVIEW
+                if j[opcode]==("hlt"): 
                     continue
                 elif j[opcode+1]==i[opcodeindex+2]:
                     print(j[-1])
