@@ -303,7 +303,7 @@ for i in instruction:
                 print("Error at line "+str(instruction.index(i))+": ",end='')
                 print('Illegal Use of Flags')
                 sys.exit();
-            elif (i[opcodeindex]=='mov')and opcodeindex +2!=i.index(j):
+            elif (i[opcodeindex]=='mov')and (opcodeindex+2)!=i.index(j):
                 print("Error at line "+str(instruction.index(i))+": ",end='')
                 print('Illegal Use of Flags')
                 sys.exit();
