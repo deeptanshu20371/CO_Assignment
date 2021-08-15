@@ -291,6 +291,22 @@ if(valid_variable_count!=total_variables):
             print("Error at line "+str(i)+": ",end='')
     print('Variables not declared at the beginning')
     sys.exit();    
+ 
+#flag error(d)
+for i in instruction:
+    opcodeindex=0;
+    if(i[opcodeindex][-1]==':'):
+            opcodeindex=1;
+    for j in i:
+        if j=='FLAGS':
+            if (i[opcodeindex]!='mov'):
+                print("Error at line "+str(instruction.index(i))+": ",end='')
+                print('Illegal Use of Flags')
+                sys.exit();
+            elif (i[opcodeindex]=='mov')and opcodeindex +2!=i.index(j):
+                print("Error at line "+str(instruction.index(i))+": ",end='')
+                print('Illegal Use of Flags')
+                sys.exit();
 
 #=========================Error_Handling=========================
 
