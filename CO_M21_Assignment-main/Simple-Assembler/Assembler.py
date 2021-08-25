@@ -82,9 +82,20 @@ Reg_Address={
 
 #=========================Error_Handling=========================
 
+
+
 #Variable not declared at beginning(g)    
 total_variables=0;
 valid_variable_count=0;
+
+for i in instruction:
+    opcodeindex=0
+    if(i[opcodeindex][-1]==':'):
+        opcodeindex=1;
+    if (opcodeindex==1 and len(i)==2):
+        print("Error at line "+str(instruction_copy.index(i)+1)+": ",end='')
+        print("Empty label")
+        sys.exit()
 
 for i in instruction:
     opcodeindex=0;
