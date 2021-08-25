@@ -23,7 +23,9 @@ no_of_variables=0
 variable_list=[]
 label_list=[]
 for i in instruction:
-    if(i[0]=='var'):
+    if (len(i)==1):
+        variable_list.append('')
+    elif(i[0]=='var'):
         variable_list.append(i[1])
         no_of_variables+=1;
 for i in range(len(instruction)):

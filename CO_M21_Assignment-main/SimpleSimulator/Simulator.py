@@ -283,4 +283,4 @@ while(not halted):
 MEM_dump();
 
 plt.scatter(cycle, memadd)
-plt.show()
+plt.savefig('plot.png')
