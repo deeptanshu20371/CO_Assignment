@@ -120,8 +120,8 @@ def execute(current_instruction):
         #Divide
         a=int(RF[current_instruction[10:13]],2)
         b=int(RF[current_instruction[13:]],2)
-        RF['000']=binary_converter(a//b)
-        RF['001']=binary_converter(a%b)
+        RF['000']=sixteenbit(binary_converter(a//b))
+        RF['001']=sixteenbit( binary_converter(a%b))
         RF['111']='0000000000000000'
         return False,PC+1
     
@@ -131,7 +131,7 @@ def execute(current_instruction):
         b=RF[current_instruction[5:8]]
         for i in range(imm):
             b=b[:-1]
-            b='1'+b
+            b='0'+b
         RF[current_instruction[5:8]]=b
         RF['111']='0000000000000000'
         return False,PC+1
@@ -152,7 +152,7 @@ def execute(current_instruction):
         reg_first=RF[current_instruction[10:13]]
         reg_second=RF[current_instruction[13:]]
         result=""
-        for i in range(8):
+        for i in range(16):
             a=reg_first[i]
             b=reg_second[i]
             if (a=='0' and b=='0') or (a=='1' and b=='1'):
@@ -168,11 +168,12 @@ def execute(current_instruction):
         reg_first=RF[current_instruction[10:13]]
         reg_second=RF[current_instruction[13:]]
         result=""
-        for i in range(8):
+        for i in range(16):
             a=reg_first[i]
             b=reg_second[i]
             if (a=='0' and b=='0'):
                 result=result+'0'
+
             else:
                 result=result+'1'
         RF[current_instruction[7:10]]=result
@@ -184,7 +185,7 @@ def execute(current_instruction):
         reg_first=RF[current_instruction[10:13]]
         reg_second=RF[current_instruction[13:]]
         result=""
-        for i in range(8):
+        for i in range(16):
             a=reg_first[i]
             b=reg_second[i]
             if (a=='1' and b=='1'):
@@ -197,11 +198,16 @@ def execute(current_instruction):
     
     elif (current_instruction[0:5]=='01101'):
         #Invert
-        for i in len(RF[current_instruction[10:13]]):
-            if (RF[current_instruction[10:13][i]]==0):
-                (RF[current_instruction[7:10][i]]==1)
+        reg_first=RF[current_instruction[10:13]]
+        reg_second=RF[current_instruction[13:]]
+        result=''
+        for i in range(16):
+            b=reg_second[i]
+            if (b=='1'):
+                result=result+'0'
             else:
-                (RF[current_instruction[7:10][i]]==0)
+                result=result+'1'
+        RF[current_instruction[10:13]]=result
         RF['111']='0000000000000000'
         return False,PC+1
     
