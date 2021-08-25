@@ -295,7 +295,8 @@ for i in instruction:
     opcodeindex=0
     if(i[opcodeindex][-1]==':'):
         opcodeindex=1;
-    if (i[opcodeindex]=="mov") and (i[opcodeindex+2][0]=="$"):
+    if (i[opcodeindex]=="mov") and (i[opcodeindex+2][0]=="$") or (i[opcodeindex]=="ls") and (i[opcodeindex+2][0]=="$") or (i[opcodeindex]=="rs") and (i[opcodeindex+2][0]=="$"):
+        imm_val = int((i[opcodeindex+2][1:(len(i[opcodeindex+2]))])):
         imm_val = int((i[opcodeindex+2][1:(len(i[opcodeindex+2]))]))
         if (imm_val >= 0) and (imm_val <= 255):
             continue
